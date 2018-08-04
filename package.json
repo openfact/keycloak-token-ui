@@ -9,7 +9,7 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build:aot": "ng build --aot",
-    "build:aot:prod": "ng build --prod --aot --build-optimizer",
+    "build:aot:prod": "ng build --prod --aot --build-optimizer --output-path=dist",
     "ci:travis": "npm run lint && npm run build:aot",
     "build:docker": "npm run build:aot:prod && docker build -t openfact/openfact-keycloak-token-ui:latest . && docker build -t openfact/openfact-keycloak-token-ui-openshift -f Dockerfile.deploy .",
     "docker": "docker"
