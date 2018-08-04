@@ -1,0 +1,118 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: openfact-keycloak-token-ui
+objects:
+- apiVersion: v1
+  kind: DeploymentConfig
+  metadata:
+    generation: 1
+    labels:
+      service: openfact-keycloak-token-ui
+    name: openfact-keycloak-token-ui
+  spec:
+    replicas: 1
+    selector:
+      service: openfact-keycloak-token-ui
+    strategy:
+      resources: {}
+      rollingParams:
+        intervalSeconds: 1
+        maxSurge: 25%
+        maxUnavailable: 25%
+        timeoutSeconds: 600
+        updatePeriodSeconds: 1
+      type: Rolling
+    template:
+      metadata:
+        creationTimestamp: null
+        labels:
+          service: openfact-keycloak-token-ui
+      spec:
+        containers:
+        - image: openfact/openfact-keycloak-token-ui-openshift:latest
+          imagePullPolicy: Always
+          name: openfact-keycloak-token-ui
+          ports:
+          - containerPort: 80
+            protocol: TCP
+          env:
+            - name: PROXY_PASS_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: openfact-keycloak-token-ui
+                  key: proxy.pass.url
+            - name: SSO_REALM
+              valueFrom:
+                configMapKeyRef:
+                  name: openfact-keycloak-token-ui
+                  key: sso.realm
+            - name: SSO_API_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: openfact-keycloak-token-ui
+                  key: sso.api.url
+            - name: SSO_CLIENT_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: openfact-keycloak-token-ui
+                  key: sso.client.id
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 20
+            timeoutSeconds: 10
+          livenessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 10
+        dnsPolicy: ClusterFirst
+        restartPolicy: Always
+        securityContext: {}
+        terminationGracePeriodSeconds: 30
+    test: false
+    triggers:
+    - type: ConfigChange
+  status: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    creationTimestamp: null
+    labels:
+      service: openfact-keycloak-token-ui
+    name: openfact-keycloak-token-ui
+  spec:
+    ports:
+    - name: "8080"
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      service: openfact-keycloak-token-ui
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Route
+  metadata:
+    creationTimestamp: null
+    labels:
+      service: openfact-keycloak-token-ui
+    name: openfact-keycloak-token-ui
+  spec:
+    host: ''
+    port:
+      targetPort: "8080"
+    to:
+      kind: Service
+      name: openfact-keycloak-token-ui
+      weight: 100
+    wildcardPolicy: None
+  status: {}
+parameters:
+- name: IMAGE_TAG
+  value: latest

@@ -9,7 +9,7 @@ import {
   HTTP_INTERCEPTORS
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { from } from 'rxjs'
+import { from } from 'rxjs';
 import { map, concatMap, tap } from 'rxjs/operators';
 import { KeycloakService } from './keycloak.service';
 
@@ -25,32 +25,32 @@ export class KeycloakInterceptor implements HttpInterceptor {
     const tokenObservable: Observable<string> = from(tokenPromise);
 
     return tokenObservable.pipe(
-        map((token) => {
-            request = request.clone({
-                setHeaders: {
-                    Authorization: `Bearer ${token}`
+      map((token) => {
+        request = request.clone({
+          setHeaders: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+        return request;
+      }),
+      concatMap((newRequest) => {
+        return next.handle(newRequest).pipe(
+          tap(
+            (event: HttpEvent<any>) => {
+              if (event instanceof HttpResponse) {
+                // do stuff with response if you want
+              }
+            },
+            (err: any) => {
+              if (err instanceof HttpErrorResponse) {
+                if (err.status === 400 || err.status === 401) {
+                  this.keycloakService.login();
                 }
-            });
-            return request;
-        }),
-        concatMap((newRequest) => {
-            return next.handle(newRequest).pipe(
-                tap(
-                    (event: HttpEvent<any>) => {
-                      if (event instanceof HttpResponse) {
-                        // do stuff with response if you want
-                      }
-                    },
-                    (err: any) => {
-                      if (err instanceof HttpErrorResponse) {
-                        if (err.status === 400 || err.status === 401) {
-                          this.keycloakService.login();
-                        }
-                      }
-                })
-            );
-        })
-    );    
+              }
+            })
+        );
+      })
+    );
 
   }
 }

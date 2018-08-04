@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: openfact-keycloak-token-ui
+type: Opaque
+data:
+  proxy.pass.url: ""
+  sso.realm: ""
+  sso.api.url: ""
+  sso.client.id: ""

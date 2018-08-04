@@ -17,7 +17,6 @@ export class AppComponent {
   }
 
   test() {
-    console.log("test");
     this.keycloakService.login({ scope: 'offline_access' });
   }
 

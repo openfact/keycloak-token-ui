@@ -25,11 +25,11 @@ export class KeycloakService {
    */
   static init(initOptions?: InitOptions): Promise<any> {
     const configOptions: string | {} = {
-      realm: window['OpenfactUIEnv']['ssoRealm'],
-      url: window['OpenfactUIEnv']['ssoApiUrl'],
-      clientId: window['OpenfactUIEnv']['ssoClientID'],
+      realm: window['KeycloakUIEnv']['ssoRealm'],
+      url: window['KeycloakUIEnv']['ssoApiUrl'],
+      clientId: window['KeycloakUIEnv']['ssoClientID'],
     };
-    
+
     KeycloakService.keycloakAuth = Keycloak(configOptions);
 
     return new Promise((resolve, reject) => {
@@ -48,7 +48,7 @@ export class KeycloakService {
   }
 
   login(options?: any) {
-    KeycloakService.keycloakAuth.login(options);    
+    KeycloakService.keycloakAuth.login(options);
   }
 
   logout() {
@@ -71,7 +71,7 @@ export class KeycloakService {
     KeycloakService.keycloakAuth.accountManagement();
   }
 
-  getToken(): Promise<string> {    
+  getToken(): Promise<string> {
     return new Promise<string>((resolve, reject) => {
       if (KeycloakService.keycloakAuth.token) {
         KeycloakService.keycloakAuth

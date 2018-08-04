@@ -1,0 +1,6 @@
+#!/bin/bash
+docker login -u "$DOCKER_USERNAME" -p "$DOCKER_PASSWORD";
+docker tag openfact/openfact-keycloak-token-ui openfact/openfact-keycloak-token-ui:$(git rev-parse --short HEAD);
+docker tag openfact/openfact-keycloak-token-ui-openshift openfact/openfact-keycloak-token-ui-openshift:$(git rev-parse --short HEAD);
+docker push openfact/openfact-keycloak-token-ui
+docker push openfact/openfact-keycloak-token-ui-openshift
