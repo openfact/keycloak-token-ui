@@ -18,4 +18,14 @@
   </li>
 </ul>
 
+<button type="button" (click)="test()">Obtener Token</button>
+<button type="logout" (click)="logout()">logout</button>
+<button type="imprimir" (click)="imprimir()">imprimir</button>
+
+<br/>
+token: {{token}}
+
+<br/>
+tokenType: {{tokenType}}
+
 <router-outlet></router-outlet>
