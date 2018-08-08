@@ -26,7 +26,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.subcriptions.forEach((val) => val.unsubscribe());
   }
 
-  logout() {    
+  logout() {
     this.keycloakService.logout();
   }
 
