@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "node server.js",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -12,7 +12,8 @@
     "build:aot:prod": "ng build --prod --aot --build-optimizer --output-path=dist",
     "ci:travis": "npm run lint && npm run build:aot",
     "build:docker": "npm run build:aot:prod && docker build -t openfact/openfact-keycloak-token-ui:latest . && docker build -t openfact/openfact-keycloak-token-ui-openshift -f Dockerfile.deploy .",
-    "docker": "docker"
+    "docker": "docker",
+    "postinstall": "ng build --prod --aot --build-optimizer"
   },
   "private": true,
   "dependencies": {
@@ -52,5 +53,9 @@
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1",
     "typescript": "~2.7.2"
+  },
+  "engines": {
+    "node": "~8.9.4",
+    "npm": "~5.6.0"
   }
 }
