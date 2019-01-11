@@ -24,12 +24,7 @@ export class KeycloakService {
    */
 
   static init(initOptions?: InitOptions): Promise<any> {
-
-    // const hconfigOptions: string | {} = {
-    //   realm: SSO_REALM,
-    //   url: SSO_API_URL,
-    //   clientId: SSO_CLIENT_ID
-    // };   
+       
     const configOptions: string | {} = {
       realm: window['KeycloakUIEnv']['ssoRealm'],
       url: window['KeycloakUIEnv']['ssoApiUrl'],
