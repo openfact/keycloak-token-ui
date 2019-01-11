@@ -1,5 +1,7 @@
+import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
-
+import { Http, Response, } from '@angular/http';
+import 'rxjs/add/operator/map';
 // If using a local keycloak.js, uncomment this import.  With keycloak.js fetched
 // from the server, you get a compile-time warning on use of the Keycloak()
 // method below.  I'm not sure how to fix this, but it's certainly cleaner
@@ -12,6 +14,15 @@ type InitOptions = Keycloak.KeycloakInitOptions;
 
 @Injectable()
 export class KeycloakService {
+
+  constructor(private http: Http) {
+    this.http.get(window.location.origin + '/config').subscribe(urlBackend => {
+      console.log(urlBackend);
+    }, () => {
+      console.log('Can´t find the backend URL, using a failover value');
+    });
+  }
+
   static keycloakAuth: KeycloakClient;
 
   /**
@@ -24,13 +35,18 @@ export class KeycloakService {
    * @returns {Promise<T>}
    */
   static init(initOptions?: InitOptions): Promise<any> {
+
+    // const hconfigOptions: string | {} = {
+    //   realm: SSO_REALM,
+    //   url: SSO_API_URL,
+    //   clientId: SSO_CLIENT_ID
+    // };
+
     const configOptions: string | {} = {
       realm: window['KeycloakUIEnv']['ssoRealm'],
       url: window['KeycloakUIEnv']['ssoApiUrl'],
-      clientId: window['KeycloakUIEnv']['ssoClientID'],
+      clientId: window['KeycloakUIEnv']['ssoClientID']
     };
-
-    console.log(JSON.stringify(configOptions));
 
     KeycloakService.keycloakAuth = Keycloak(configOptions);
 
