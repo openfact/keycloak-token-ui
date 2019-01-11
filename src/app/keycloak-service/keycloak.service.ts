@@ -29,13 +29,7 @@ export class KeycloakService {
     //   realm: SSO_REALM,
     //   url: SSO_API_URL,
     //   clientId: SSO_CLIENT_ID
-    // };
-    console.log("data");
-   console.log(process.env.SSO_REALM);
-   console.log(process.env.JAVA_HOME);
-   console.log(process.env.NODE_ENV);
-   console.log(process.env.SSO_CLIENT_ID);
-   console.log("data 01");
+    // };   
     const configOptions: string | {} = {
       realm: window['KeycloakUIEnv']['ssoRealm'],
       url: window['KeycloakUIEnv']['ssoApiUrl'],
