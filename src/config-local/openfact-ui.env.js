@@ -1,3 +1,4 @@
+
 window.KeycloakUIEnv = {
   "ssoRealm":  process.env.SSO_REALM ,
   "ssoApiUrl": process.env.SSO_API_URL ,
