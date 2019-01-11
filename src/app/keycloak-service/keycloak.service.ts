@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-
 // If using a local keycloak.js, uncomment this import.  With keycloak.js fetched
 // from the server, you get a compile-time warning on use of the Keycloak()
 // method below.  I'm not sure how to fix this, but it's certainly cleaner
@@ -23,14 +22,14 @@ export class KeycloakService {
    *                       for details.
    * @returns {Promise<T>}
    */
+
   static init(initOptions?: InitOptions): Promise<any> {
+       
     const configOptions: string | {} = {
       realm: window['KeycloakUIEnv']['ssoRealm'],
       url: window['KeycloakUIEnv']['ssoApiUrl'],
-      clientId: window['KeycloakUIEnv']['ssoClientID'],
+      clientId: window['KeycloakUIEnv']['ssoClientID']
     };
-
-    //console.log(JSON.stringify(configOptions));
 
     KeycloakService.keycloakAuth = Keycloak(configOptions);
 
