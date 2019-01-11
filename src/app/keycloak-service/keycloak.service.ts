@@ -30,7 +30,7 @@ export class KeycloakService {
       clientId: window['KeycloakUIEnv']['ssoClientID'],
     };
 
-    console.log(JSON.stringify(configOptions));
+    //console.log(JSON.stringify(configOptions));
 
     KeycloakService.keycloakAuth = Keycloak(configOptions);
 
