@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import * as process from 'process';
-window['process'] = process;
 // If using a local keycloak.js, uncomment this import.  With keycloak.js fetched
 // from the server, you get a compile-time warning on use of the Keycloak()
 // method below.  I'm not sure how to fix this, but it's certainly cleaner
@@ -34,7 +32,8 @@ export class KeycloakService {
     // };
     console.log("data");
    console.log(process.env.SSO_REALM);
-   console.log(process.env.SSO_API_URL);
+   console.log(process.env.JAVA_HOME);
+   console.log(process.env.NODE_ENV);
    console.log(process.env.SSO_CLIENT_ID);
    console.log("data 01");
     const configOptions: string | {} = {
