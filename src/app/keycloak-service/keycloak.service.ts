@@ -1,7 +1,6 @@
 import { environment } from './../../environments/environment';
 import { Injectable } from '@angular/core';
 import { Http, Response, } from '@angular/http';
-import 'rxjs/add/operator/map';
 // If using a local keycloak.js, uncomment this import.  With keycloak.js fetched
 // from the server, you get a compile-time warning on use of the Keycloak()
 // method below.  I'm not sure how to fix this, but it's certainly cleaner
